@@ -25,32 +25,23 @@ end
 
 using LinearAlgebra
 using PhyloPlots
-# Extras packa
 using DelimitedFiles
 using PhyloNetworks
 using Printf
 using Plots
-
-
-
-
 using Dates
-# import Dates
 using Statistics
 using RCall
-
 import Plots
 ## Extra libraries
-using Pkg
+# using Pkg
 # Pkg.add("RCall")
-
 
 ## Example of a random tree generation
 
 # Including functions
 include("Fn_PhyloSim.jl")
-
-
+# Fixing seed
 Random.seed!(42)
 
 # Different taxa for testing
@@ -58,12 +49,13 @@ taxa = ["1ba","b","c","d"]
 taxa = ["A","B"]
 taxa = collect('a':'d')
 taxa = collect('a':'z')
+
 # Total branch lengths
 total_bl = 10
 
+# Generating a random tree topology and branch length in Newikc format
 x = Sim_tree(taxa,total_bl)
 print.(x); println("\n\n\n")
-
 
 ## To plot this tree
 
