@@ -13,13 +13,6 @@
 # 3. Bla bla bla
 #
 #-------------------------------------------------------------------------#
-## Working path
-
-if(isfile("/Users/useradmin"))
-    cd("/Users/useradmin/Dropbox/1 Phylogenetics/2019/Ransanec/Julia/Simulations")
-elseif(isfile("/Users/arrigocoen"))
-    cd("/Users/arrigocoen/Dropbox/1 Phylogenetics/2019/Ransanec/Julia/Simulations")
-end
 
 ## Pacakges
 
