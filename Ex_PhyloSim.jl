@@ -4,7 +4,6 @@
 #                                                                         #
 #-------------------------------------------------------------------------#
 
-# V1 18 may 2020
 #-------------------------------------------------------------------------#
 # OBSERVATIONS:
 
@@ -14,30 +13,32 @@
 #
 #-------------------------------------------------------------------------#
 
-## Pacakges
-using LinearAlgebra
-using Printf
+
+## Needed
+
 using Plots
+using Gadfly, Cairo, Fontconfig
+using PhyloPlots
+using PhyloNetworks
+
+## Extras packa
+using LinearAlgebra
+using DelimitedFiles
+using PhyloNetworks
+using Printf
 using Dates
 using Statistics
 using RCall
-using Plots
 
-using DataFrames
-using CSV
+## Changing packages
+using Pkg
+# Pkg.add("PhyloPlots")
 
-
-using PhyloPlots
-using DelimitedFiles
-using PhyloNetworks
-
-## Extra libraries
-# using Pkg
-# Pkg.add("RecipesBase")
-
-
- # import RecipesBase: plot
-
+Pkg.update() # get all latest versions
+Pkg.update("PhyloPlots")
+Pkg.update("PhyloNetworks")
+# Pkg.rm("Plots")
+# Pkg.rm("PhyloPlots")
 
 ## Example of a random tree generation
 
@@ -46,7 +47,7 @@ include("Fn_PhyloSim.jl")
 # Fixing seed
 Random.seed!(42)
 
-# Different taxa for testing
+# Different taxa examples
 taxa = ["1ba","b","c","d"]
 taxa = ["A","B"]
 taxa = collect('a':'d')
@@ -57,14 +58,45 @@ total_bl = 10
 
 # Generating a random tree topology and branch length in Newikc format
 x = Sim_tree(taxa,total_bl)
-print.(x); println("\n\n\n")
+print(join(x))
+
+net = readTopology(join(x))
+tipLabels(net)
+
+net
+## Some info about the network
+printEdges(net)
+
+## Example from
+# http://crsl4.github.io/PhyloNetworks.jl/latest/man/inputdata/#Input-for-SNaQ-1
+
+# To show the info on the file raxmltrees.tre, run the next
+# less("raxmltrees.tre") # to exit use "q"
+
+raxmltrees = joinpath(dirname(pathof(PhyloNetworks)), "..","examples","raxmltrees.tre")
+genetrees = readMultiTopology(raxmltrees);
+genetrees[3]
+
+plot(genetrees[3], :R); # tree for 3rd gene
+plot(genetrees[3], showEdgeLength=true); # tree for 3rd gene
+plot(genetrees[3]); # tree for 3rd gene
+
+
+
+## tanehu
+using Plots
+x = 1:10; y = rand(10); # These are the plotting data
+plot(x, y)
 
 ## To plot this tree
-
+x = Sim_tree(taxa,total_bl)
 nettext = join(x)
 net = readTopology(nettext)
+
+plot(net)
+
 p = plot(net, showEdgeLength=true)
-draw(SVG("Plot_random_tree.svg"), p)
+draw(SVG("Plot_random_tree.svg"),   p)
 
 
 ## Runing
@@ -77,7 +109,7 @@ nettext = "(10:9.6,(#H2:2.9::0.3,(1:7.2,(2:6.0,(((9:0.4)#H1:5.0::0.8,(3:4.4,(4:3
 
 net = readTopology(nettext)
 p = plot(net, showEdgeLength=true)
-# draw(SVG("resources/n10.svg"), p)
+draw(SVG("n10.svg"), p)
 
 
 ## aoheu

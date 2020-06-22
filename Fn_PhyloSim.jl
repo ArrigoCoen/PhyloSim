@@ -13,28 +13,7 @@
 # 3. Bla bla bla
 #
 #-------------------------------------------------------------------------#
-
-
-## Pacakges
-
-using LinearAlgebra
-using PhyloPlots
-## Extras packa
-using DelimitedFiles
-using PhyloNetworks
-using Printf
-using Plots
-
-
-using Dates
-# import Dates
-using Statistics
-using RCall
-
-## Extra libraries
-using Pkg
-# Pkg.add("RCall")
-
+# using PhyloNetworks
 
 ## FUNCTIONS
 
