@@ -7,36 +7,39 @@
 #-------------------------------------------------------------------------#
 # OBSERVATIONS:
 
-# 1. Bla bla bla
-# 2. Bla bla bla
-# 3. Bla bla bla
+# 1. This code is for simulating phylogenetic networks
+# 2. This code is a work in progress
+# 3. The functions are in the file Fn_PhyloSim
+# 4. The principal example is on "Example of a random tree generation" section
 #
 #-------------------------------------------------------------------------#
 
+using Plots
+using PhyloNetworks
 
+using PhyloPlots
 ## Needed
 
-using Plots
-using Gadfly, Cairo, Fontconfig
-using PhyloPlots
-using PhyloNetworks
-
-## Extras packa
-using LinearAlgebra
-using DelimitedFiles
-using PhyloNetworks
-using Printf
-using Dates
-using Statistics
-using RCall
+# using Gadfly, Cairo, Fontconfig
+# using PhyloPlots
+# using PhyloNetworks
+#
+# ## Extras packa
+# using LinearAlgebra
+# using DelimitedFiles
+# using PhyloNetworks
+# using Printf
+# using Dates
+# using Statistics
+# using RCall
 
 ## Changing packages
 using Pkg
 # Pkg.add("PhyloPlots")
 
-Pkg.update() # get all latest versions
-Pkg.update("PhyloPlots")
-Pkg.update("PhyloNetworks")
+# Pkg.update() # get all latest versions
+# Pkg.update("PhyloPlots")
+# Pkg.update("PhyloNetworks")
 # Pkg.rm("Plots")
 # Pkg.rm("PhyloPlots")
 
@@ -63,6 +66,7 @@ print(join(x))
 net = readTopology(join(x))
 tipLabels(net)
 
+plot(net,:R)
 net
 ## Some info about the network
 printEdges(net)
