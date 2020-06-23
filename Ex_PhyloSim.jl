@@ -69,4 +69,4 @@ tipLabels(net)
 plot(net,:R)
 net
 ## Some info about the network
-printEdges(net)
+printEdges(net) 
