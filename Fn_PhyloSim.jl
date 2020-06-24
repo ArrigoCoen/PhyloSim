@@ -134,17 +134,64 @@ function balance_a_tree(x,total_bl)
 
     return x
 end
+
+
+"""
+    Addition of a random hybrid node to a phylogenetic tree
+        We start a tree "x" with taxa "taxa" and select two taxa to add the hybrid
+        node.
+        Currently the branch length of the new hybrid and its gamma parameter are
+        uniformly distributed (0,1). The first node that is selected we currently
+        TRANSFORM it to a hybrid node. For the second node we only paste the
+        other hybrid node.
+        For instance, if we have the tree "((a,b),(c,d));" and select "b" and "c",
+        we get "((a,#H1),((c)#H1,d));", without considering the branch lengths and
+        the gamma parameter.
+        Currently, sometimes the hybrid is in the same branch. 
+        Returs the tree with the added hybrid, in Newick format.
+"""
+function add_random_hybrid(x,taxa)
+   # sampling two taxa to insert the hybrid
+   taxa_to_change1,taxa_to_change2 = taxa[randperm(length(taxa))[1:2]]
+   # We get the branch length and the gamma parameter for the new hybrid
+   bl_hybrid = rand(1)
+   gamma = rand(1)
+   # Finding the index of the taxa to change
+   idx_node1 = findfirst(x.==taxa_to_change1)
+   idx_node2 = findfirst(x.==taxa_to_change2)
+   # We allways prefere the index of node 1 to be smaller
+   if idx_node1 > idx_node2
+      idx_node1,idx_node2 = idx_node2,idx_node1
+   end
+   # Now we can make the changes on the array x
+   x[idx_node2] = "#H1"
+
+   insert!(x,idx_node1+3,gamma[1])
+   insert!(x,idx_node1+3,":")
+   insert!(x,idx_node1+3,":")
+   insert!(x,idx_node1+3,bl_hybrid[1])
+   insert!(x,idx_node1+3,":")
+   insert!(x,idx_node1+3,"#H1")
+   insert!(x,idx_node1+3,")")
+   insert!(x,idx_node1,"(")
+   return x
+end
+
 """
     Simulating a phylogenetic tree
         Returs a the topology in Newick format
 """
-function Sim_tree(taxa,total_bl)
+function Sim_tree(taxa,total_bl,is_network)
     # Getting the topology
     x = random_tree_topology(taxa)
     # Adding some branch lengths
     x = add_random_bl(x,taxa)
     # Fixing the branch lengths to be "equal"
     x = balance_a_tree(x,total_bl)
+    # Adding a random hybrid
+    if is_network
+        x = add_random_hybrid(x,taxa)
+    end
     return x
 end
 
