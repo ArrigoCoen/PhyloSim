@@ -7,43 +7,20 @@
 #-------------------------------------------------------------------------#
 # OBSERVATIONS:
 
-# 1. This code is for simulating phylogenetic networks
+# 1. This code is for simulating phylogenetic networks in a Newick format
 # 2. This code is a work in progress
 # 3. The functions are in the file Fn_PhyloSim
 # 4. The principal example is on "Example of a random tree generation" section
 #
 #-------------------------------------------------------------------------#
 
-using Plots
+## Packages
+# using Plots
 using PhyloNetworks
-
 using PhyloPlots
-## Needed
-
-# using Gadfly, Cairo, Fontconfig
-# using PhyloPlots
-# using PhyloNetworks
-#
-# ## Extras packa
-# using LinearAlgebra
-# using DelimitedFiles
-# using PhyloNetworks
-# using Printf
-# using Dates
-# using Statistics
-# using RCall
-
-## Changing packages
-using Pkg
-# Pkg.add("PhyloPlots")
-
-# Pkg.update() # get all latest versions
-# Pkg.update("PhyloPlots")
-# Pkg.update("PhyloNetworks")
-# Pkg.rm("Plots")
-# Pkg.rm("PhyloPlots")
 
 ## Example of a random tree generation
+
 
 # Including functions
 include("Fn_PhyloSim.jl")
@@ -70,7 +47,7 @@ print(join(x))
 net = readTopology(join(x))
 tipLabels(net)
 
-plot(net,:R)
+# plot(net,:R)
 
 plot(net,:R,showEdgeLength=true,showGamma=true)
 # plot(net,:R,showEdgeLength=true)

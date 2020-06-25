@@ -147,8 +147,14 @@ end
         For instance, if we have the tree "((a,b),(c,d));" and select "b" and "c",
         we get "((a,#H1),((c)#H1,d));", without considering the branch lengths and
         the gamma parameter.
-        Currently, sometimes the hybrid is in the same branch. 
+        Currently, sometimes the hybrid is in the same branch.
         Returs the tree with the added hybrid, in Newick format.
+
+        Future improvements:
+            - Extra variable with the name of the hybrid, now is H1
+            - Correcting that in some simulations the hybrid nodes are in the same
+            path an this probuces a weird hybrid that follows the same path as
+            the original tree
 """
 function add_random_hybrid(x,taxa)
    # sampling two taxa to insert the hybrid
@@ -195,4 +201,4 @@ function Sim_tree(taxa,total_bl,is_network)
     return x
 end
 
-## aoestuh
+## End of functions
