@@ -186,6 +186,13 @@ end
 """
     Simulating a phylogenetic tree
         Returs a the topology in Newick format
+
+        Future improvements:
+            - To add the hybrid a node is eliminated, this could be solved by
+            since the begining ask the name of the hybrid and past it as part of
+            the tree, but remember that this change also affects the function
+            add_random_hybrid; in particular, since this function chose randomly
+            which node of the tree is transformed to hybrid.
 """
 function Sim_tree(taxa,total_bl,is_network)
     # Getting the topology

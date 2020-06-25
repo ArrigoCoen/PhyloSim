@@ -22,6 +22,8 @@ using PhyloPlots
 ## Example of a random tree generation
 
 
+
+## ;staoeu
 # Including functions
 include("Fn_PhyloSim.jl")
 # Fixing seed
@@ -32,6 +34,9 @@ taxa = ["1ba","b","c","d"]
 taxa = ["A","B"]
 taxa = collect('a':'d')
 taxa = collect('a':'z')
+taxa = string.(1:40)
+
+
 
 # Total branch lengths
 total_bl = 10
@@ -41,16 +46,16 @@ is_network = true
 
 # Generating a random tree topology and branch length in Newikc format
 x = Sim_tree(taxa,total_bl,is_network)
-
 print(join(x))
 
+# Transformation to a "HybridNetwork" variable of the package PhyloNetworks
 net = readTopology(join(x))
 tipLabels(net)
 
-# plot(net,:R)
-
+# Plot of the network
 plot(net,:R,showEdgeLength=true,showGamma=true)
 # plot(net,:R,showEdgeLength=true)
+# plot(net,:R)
 net
 ## Some info about the network
 printEdges(net)
