@@ -21,9 +21,6 @@ using PhyloPlots
 
 ## Example of a random tree generation
 
-
-
-## ;staoeu
 # Including functions
 include("Fn_PhyloSim.jl")
 # Fixing seed

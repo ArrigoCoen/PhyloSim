@@ -208,4 +208,73 @@ function Sim_tree(taxa,total_bl,is_network)
     return x
 end
 
+## Funcitons of njWillems2014
+
+function Julia_willems2014(x,name_file_dist_txt,
+                           name_file_Input_Matrix_Distances,
+                           name_file_Parameters_Distances,
+                           name_file_new_Network_Distances,
+                           folder_output_distances_willems)
+   # Folder to save the output of willems
+   output_willems = folder_output_distances_willems*"/"*name_file_new_Network_Distances
+   # Getting the netwokr from the Newick format
+   net = readTopology(join(x))
+   # Distance matrix
+   Sigma = sharedPathMatrix(net)
+   Vy = Sigma[:Tips]
+
+   # From Cecil
+   M = pairwiseTaxonDistanceMatrix(net, keepInternal=false)
+   tipLabels(net)
+
+   # Generating file to run njWillems2014
+   ind = parse.(Int, tipLabels(net))
+   # ind =  tipLabels(net)
+
+   Mext = hcat(ind,M)
+   n = length(tipLabels(net))
+
+
+   df = DataFrame(Mext)
+   df[!,:x1] = convert.(Int,df[!,:x1])
+
+   CSV.write(name_file_dist_txt, df, writeheader=false, delim=' ')
+
+
+   # the first row with the number of tips
+   f=readlines(name_file_dist_txt)
+   g = open(name_file_Input_Matrix_Distances,"w")
+   write(g,"$n \n")
+
+   for l in f
+      write(g,l)
+      write(g,"\n")
+   end
+   close(g)
+
+
+
+   # This "run" generates the file "Network_Distances.txt"
+   text_to_run = `./njwillems2014 $name_file_Input_Matrix_Distances $name_file_Parameters_Distances`
+   run(text_to_run)
+
+   # We copy the file "Network_Distances.txt", that generates njwillems2014
+   cp("Network_Distances.txt", output_willems, force=true)
+
+   net_dist = readdlm("Network_Distances.txt")
+   # rm(name_file_new_Network_Distances)
+
+   # txt_file = open("Network_Distances.txt","r")
+   # readline(txt_file)
+   # close(txt_file)
+
+   # print(join(net_dist[1:10]))
+   # println(net_dist)
+
+   idx_Main_text = findfirst(net_dist .== "Main")
+   println(net_dist[CartesianIndex(1, 1):(idx_Main_text)])
+
+   # println((net_dist[1:20]))
+   return net_dist
+end
 ## End of functions
